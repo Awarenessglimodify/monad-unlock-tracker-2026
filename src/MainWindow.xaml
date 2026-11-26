@@ -1,0 +1,157 @@
+<Window x:Class="MonadUnlockTracker.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Monad Unlock Tracker"
+        Height="680" Width="940"
+        Background="#101418"
+        Foreground="#E6E6E6"
+        FontFamily="Segoe UI"
+        WindowStartupLocation="CenterScreen"
+        Loaded="Window_Loaded"
+        Closed="Window_Closed">
+
+    <Grid Margin="18">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="26" />
+        </Grid.RowDefinitions>
+
+        <TabControl x:Name="MainTabControl" Grid.Row="0">
+
+            <TabItem Header="Unlock Calculator">
+                <Grid Margin="8">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="44" />
+                        <RowDefinition Height="44" />
+                        <RowDefinition Height="44" />
+                        <RowDefinition Height="44" />
+                        <RowDefinition Height="44" />
+                        <RowDefinition Height="48" />
+                        <RowDefinition Height="150" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0" Orientation="Horizontal">
+                        <TextBlock Text="Unlock amount (MON):"
+                                   Width="210"
+                                   VerticalAlignment="Center" />
+                        <TextBox x:Name="UnlockAmountTextBox" Width="180" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="1" Orientation="Horizontal">
+                        <TextBlock Text="Token price (USD):"
+                                   Width="210"
+                                   VerticalAlignment="Center" />
+                        <TextBox x:Name="PriceTextBox" Width="180" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="2" Orientation="Horizontal">
+                        <TextBlock Text="Circulating supply (MON):"
+                                   Width="210"
+                                   VerticalAlignment="Center" />
+                        <TextBox x:Name="SupplyTextBox" Width="180" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="3" Orientation="Horizontal">
+                        <TextBlock Text="Sell percentage (%):"
+                                   Width="210"
+                                   VerticalAlignment="Center" />
+                        <TextBox x:Name="SellPercentTextBox" Width="180" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="4" Orientation="Horizontal">
+                        <TextBlock Text="Daily volume (USD):"
+                                   Width="210"
+                                   VerticalAlignment="Center" />
+                        <TextBox x:Name="VolumeTextBox" Width="180" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="5" Orientation="Horizontal">
+                        <Button x:Name="CalculateButton"
+                                Content="Calculate sell pressure"
+                                Width="180"
+                                Margin="0,0,10,0"
+                                Click="CalculateButton_Click" />
+                        <Button x:Name="SaveSettingsButton"
+                                Content="Save settings"
+                                Width="140"
+                                Click="SaveSettingsButton_Click" />
+                    </StackPanel>
+
+                    <TextBlock x:Name="ResultTextBlock"
+                               Grid.Row="6"
+                               Text="Sell pressure will appear here."
+                               TextWrapping="Wrap"
+                               FontSize="13" />
+
+                    <TextBlock Grid.Row="7"
+                               Text="The price impact estimate compares the sell value with the daily volume from the settings."
+                               TextWrapping="Wrap"
+                               Opacity="0.6" />
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Vesting Schedule">
+                <Grid Margin="8">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="44" />
+                        <RowDefinition Height="44" />
+                        <RowDefinition Height="44" />
+                        <RowDefinition Height="48" />
+                        <RowDefinition Height="60" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0" Orientation="Horizontal">
+                        <TextBlock Text="Start date (yyyy-MM-dd):"
+                                   Width="210"
+                                   VerticalAlignment="Center" />
+                        <TextBox x:Name="StartDateTextBox" Width="180" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="1" Orientation="Horizontal">
+                        <TextBlock Text="Total amount (MON):"
+                                   Width="210"
+                                   VerticalAlignment="Center" />
+                        <TextBox x:Name="TotalAmountTextBox" Width="180" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="2" Orientation="Horizontal">
+                        <TextBlock Text="Weeks:"
+                                   Width="210"
+                                   VerticalAlignment="Center" />
+                        <TextBox x:Name="WeeksTextBox" Width="180" />
+                    </StackPanel>
+
+                    <Button x:Name="BuildScheduleButton"
+                            Grid.Row="3"
+                            Content="Build schedule"
+                            Width="180"
+                            HorizontalAlignment="Left"
+                            Click="BuildScheduleButton_Click" />
+
+                    <TextBlock x:Name="ScheduleSummaryTextBlock"
+                               Grid.Row="4"
+                               Text="Schedule summary will appear here."
+                               TextWrapping="Wrap" />
+
+                    <DataGrid x:Name="ScheduleDataGrid"
+                              Grid.Row="5"
+                              IsReadOnly="True"
+                              Margin="0,4,0,0">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Week" Binding="{Binding WeekNumber}" Width="90" />
+                            <DataGridTextColumn Header="Date" Binding="{Binding Date, StringFormat=yyyy-MM-dd}" Width="150" />
+                            <DataGridTextColumn Header="Amount (MON)" Binding="{Binding Amount, StringFormat=N0}" Width="200" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+
+        </TabControl>
+
+        <TextBlock Grid.Row="1"
+                   Text="Read-only tracker · price impact is an estimate, not a guarantee"
+                   Opacity="0.6" />
+    </Grid>
+</Window>
